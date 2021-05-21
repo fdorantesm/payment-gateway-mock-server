@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { UrlModule } from './url/url.module';
+import { UrlModule } from './checkout/checkout.module';
 import { HookModule } from './hook/hook.module';
+import { ChargeModule } from './charge/charge.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UrlModule, HookModule],
+  imports: [ConfigModule.forRoot(), UrlModule, HookModule, ChargeModule],
   controllers: [],
   providers: [],
 })
