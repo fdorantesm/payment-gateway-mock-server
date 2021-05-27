@@ -26,7 +26,7 @@ export class CheckoutController {
         clabe: body?.payee?.bankAccount || faker.finance.routingNumber(),
         email: body?.payee?.email || faker.internet.email(),
       },
-      metadata: body.matadata || {},
+      metadata: body.metadata || {},
       successUrl: body.successUrl || faker.internet.url(),
       errorUrl: body.errorUrl || faker.internet.url(),
       hook: {
