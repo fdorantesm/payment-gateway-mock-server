@@ -43,9 +43,7 @@ export class CheckoutController {
   public checkoutData(@Query('q') hash: string) {
     try {
       const data = JSON.parse(base64decode(hash).toString());
-      return {
-        data,
-      };
+      return data;
     } catch {
       throw new InternalServerErrorException();
     }
