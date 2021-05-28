@@ -1,3 +1,5 @@
+import { base64decode, base64encode } from 'utility';
+import * as faker from 'faker';
 import {
   Body,
   Controller,
@@ -7,11 +9,11 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { base64decode, base64encode, randomString } from 'utility';
-import * as faker from 'faker';
 
-@Controller('checkout')
-export class CheckoutController {
+const baseUrl = 'payment-intents';
+
+@Controller(baseUrl)
+export class PaymentIntentController {
   @Post('/')
   public createUrl(@Body() body: any) {
     const data = JSON.stringify({
@@ -35,7 +37,7 @@ export class CheckoutController {
       },
     });
     return {
-      url: `${process.env.BASE_URL}/checkout/?q=${base64encode(data)}`,
+      url: `${process.env.BASE_URL}/${baseUrl}/?q=${base64encode(data)}`,
     };
   }
 

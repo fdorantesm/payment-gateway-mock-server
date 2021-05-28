@@ -2,7 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { randomString } from 'utility';
 import { sample } from 'lodash';
 
-@Controller('charge')
+@Controller('charges')
 export class ChargeController {
   @Post('/')
   public createCharge(@Body() body: any) {

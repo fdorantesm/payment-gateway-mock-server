@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { UrlModule } from './checkout/checkout.module';
+import { PaymentIntentModule } from './payment-intent/payment-intent.module';
 import { HookModule } from './hook/hook.module';
 import { ChargeModule } from './charge/charge.module';
 import { CoreModule } from './core/core.module';
@@ -10,7 +10,7 @@ import { CoreModule } from './core/core.module';
   imports: [
     ConfigModule.forRoot(),
     CoreModule,
-    UrlModule,
+    PaymentIntentModule,
     HookModule,
     ChargeModule,
   ],
