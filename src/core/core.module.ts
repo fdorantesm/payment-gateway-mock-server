@@ -10,6 +10,8 @@ import { options } from '../config/options/config.options';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
 import { ConnectionString } from 'connection-string';
+import { mongooseHideObjectId } from '@app/mongoose-hide-object-id';
+import { mongooseUuid } from '@app/mongoose-uuid';
 
 @Module({
   imports: [
@@ -40,6 +42,8 @@ import { ConnectionString } from 'connection-string';
           connectionFactory: async (
             connection: mongoose.Connection,
           ): Promise<mongoose.Connection> => {
+            connection.plugin(mongooseHideObjectId);
+            connection.plugin(mongooseUuid);
             return connection;
           },
         };

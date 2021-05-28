@@ -9,14 +9,17 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { PaymentIntentService } from '../services/payment-intent.service';
 
 const baseUrl = 'payment-intents';
 
-@Controller(baseUrl)
+@Controller('payment-intents')
 export class PaymentIntentController {
+  constructor(private readonly paymentIntentService: PaymentIntentService) {}
+
   @Post('/')
-  public createUrl(@Body() body: any) {
-    const data = JSON.stringify({
+  public async createUrl(@Body() body: any) {
+    const data = {
       currency: body.currency || faker.random.arrayElement(['USD', 'MXN']),
       amount: body.amount || faker.finance.amount(),
       payer: {
@@ -27,6 +30,8 @@ export class PaymentIntentController {
         name: body?.payee?.name || faker.company.companyName(),
         clabe: body?.payee?.bankAccount || faker.finance.routingNumber(),
         email: body?.payee?.email || faker.internet.email(),
+        reference:
+          body?.payee?.reference || faker.finance.transactionDescription(),
       },
       metadata: body.metadata || {},
       successUrl: body.successUrl || faker.internet.url(),
@@ -35,9 +40,14 @@ export class PaymentIntentController {
         url: body.hook.url || faker.internet.url(),
         token: body.hook.token || faker.datatype.string(32),
       },
-    });
+    };
+
+    console.log(data);
+
+    const paymentItent = await this.paymentIntentService.create(data);
+    console.log(paymentItent);
     return {
-      url: `${process.env.BASE_URL}/${baseUrl}/?q=${base64encode(data)}`,
+      url: `${process.env.BASE_URL}/${baseUrl}}/${paymentItent.uuid}`,
     };
   }
 
