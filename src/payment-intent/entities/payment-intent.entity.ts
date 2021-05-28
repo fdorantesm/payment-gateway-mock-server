@@ -43,7 +43,7 @@ export class PaymentIntentEntity extends Document {
   public errorUrl: string;
 
   @Prop({ type: Object, required: true })
-  public webhookUrl: {
+  public webhook: {
     url: string;
     token: string;
   };

@@ -29,17 +29,16 @@ export class PaymentIntentController {
       },
       payee: {
         name: body?.payee?.name || faker.company.companyName(),
-        clabe: body?.payee?.bankAccount || faker.finance.routingNumber(),
+        clabe: body?.payee?.bankAccount || faker.finance.account(18),
         email: body?.payee?.email || faker.internet.email(),
-        reference:
-          body?.payee?.reference || faker.finance.transactionDescription(),
+        reference: body?.payee?.reference || faker.finance.account(8),
       },
       metadata: body.metadata || {},
       successUrl: body.successUrl || faker.internet.url(),
       errorUrl: body.errorUrl || faker.internet.url(),
-      webhookUrl: {
-        url: body.hook.url || faker.internet.url(),
-        token: body.hook.token || faker.datatype.string(32),
+      webhook: {
+        url: body?.webhook?.url || faker.internet.url(),
+        token: body?.webhook?.token || faker.datatype.string(32),
       },
     };
 
