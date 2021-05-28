@@ -11,7 +11,12 @@ export class PaymentIntentService {
   public create(
     paymentIntent: Partial<PaymentIntentEntity>,
   ): Promise<PaymentIntentEntity> {
-    return this.repository.create(paymentIntent);
+    return this.repository.create({
+      ...paymentIntent,
+      fee: paymentIntent.amount * 0.02,
+      createdBy: 'payer',
+      status: 'created',
+    });
   }
 
   public findOne(

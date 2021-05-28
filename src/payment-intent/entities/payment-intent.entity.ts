@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-
 import { Document } from '../../common/interfaces/document.interface';
 import {
   PaymentIntentCreator,
@@ -7,28 +6,25 @@ import {
 } from '../types/payment.types';
 
 @Schema({
-  collection: 'payment-intents',
+  collection: 'paymentIntents',
   timestamps: true,
   autoIndex: true,
 })
 export class PaymentIntentEntity extends Document {
-  constructor() {
-    super();
-  }
   @Prop({ type: String, required: true })
-  currency: string;
+  public currency: string;
 
   @Prop({ type: Number, required: true })
-  amount: number;
+  public amount: number;
 
   @Prop({ type: Object, required: true })
-  payer: {
+  public payer: {
     name: string;
     email: string;
   };
 
   @Prop({ type: Object, required: true })
-  payee: {
+  public payee: {
     name: string;
     email: string;
     clabe: string;
@@ -36,38 +32,38 @@ export class PaymentIntentEntity extends Document {
   };
 
   @Prop({ type: Object, required: true })
-  metadata: {
+  public metadata: {
     [key: string]: any;
   };
 
   @Prop({ type: String, required: true })
-  successUrl: string;
+  public successUrl: string;
 
   @Prop({ type: String, required: true })
-  errorUrl: string;
+  public errorUrl: string;
 
   @Prop({ type: Object, required: true })
-  webhookUrl: {
+  public webhookUrl: {
     url: string;
     token: string;
   };
 
   @Prop({ type: String, required: true })
-  status: PaymentIntentStatus;
+  public status: PaymentIntentStatus;
 
   enterpriseId: string;
 
   @Prop({ type: Number, required: true })
-  fee: number;
+  public fee: number;
 
   @Prop({ type: String, required: true })
-  concept: string;
+  public concept: string;
+
+  @Prop({ type: String })
+  public externalId?: string;
 
   @Prop({ type: String, required: true })
-  externalId: string;
-
-  @Prop({ type: String, required: true })
-  createdBy: PaymentIntentCreator;
+  public createdBy: PaymentIntentCreator;
 }
 
 export const PaymentIntentSchema =

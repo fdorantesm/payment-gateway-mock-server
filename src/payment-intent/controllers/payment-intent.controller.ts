@@ -13,15 +13,16 @@ import { PaymentIntentService } from '../services/payment-intent.service';
 
 const baseUrl = 'payment-intents';
 
-@Controller('payment-intents')
+@Controller(baseUrl)
 export class PaymentIntentController {
   constructor(private readonly paymentIntentService: PaymentIntentService) {}
 
   @Post('/')
   public async createUrl(@Body() body: any) {
-    const data = {
+    const data: any = {
       currency: body.currency || faker.random.arrayElement(['USD', 'MXN']),
       amount: body.amount || faker.finance.amount(),
+      concept: faker.finance.transactionType(),
       payer: {
         name: body?.payer?.name || faker.company.companyName(),
         email: body?.payer?.email || faker.internet.email(),
@@ -36,26 +37,23 @@ export class PaymentIntentController {
       metadata: body.metadata || {},
       successUrl: body.successUrl || faker.internet.url(),
       errorUrl: body.errorUrl || faker.internet.url(),
-      hook: {
+      webhookUrl: {
         url: body.hook.url || faker.internet.url(),
         token: body.hook.token || faker.datatype.string(32),
       },
     };
 
-    console.log(data);
-
     const paymentItent = await this.paymentIntentService.create(data);
-    console.log(paymentItent);
     return {
-      url: `${process.env.BASE_URL}/${baseUrl}}/${paymentItent.uuid}`,
+      url: `${process.env.BASE_URL}/${baseUrl}/${paymentItent.uuid}`,
     };
   }
 
-  @Get('/')
-  public checkoutData(@Query('q') hash: string) {
+  @Get('/:uuid')
+  public async checkoutData(@Param('uuid') uuid: string) {
     try {
-      const data = JSON.parse(base64decode(hash).toString());
-      return data;
+      const paymentIntent = await this.paymentIntentService.findOne({ uuid });
+      return paymentIntent.toJSON();
     } catch {
       throw new InternalServerErrorException();
     }
