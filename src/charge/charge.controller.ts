@@ -8,6 +8,7 @@ export class ChargeController {
   public createCharge(@Body() body: any) {
     return {
       type: 'charge',
+      paymentMethod: 'card',
       event: 'charge.success',
       authorizationNumber: randomString(16, '01234567890'),
       metadata: body?.metadata || {},

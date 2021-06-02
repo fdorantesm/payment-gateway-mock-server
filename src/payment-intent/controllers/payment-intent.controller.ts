@@ -44,7 +44,7 @@ export class PaymentIntentController {
 
     const paymentItent = await this.paymentIntentService.create(data);
     return {
-      url: `${process.env.BASE_URL}/${baseUrl}/${paymentItent.uuid}`,
+      uuid: paymentItent.uuid,
     };
   }
 

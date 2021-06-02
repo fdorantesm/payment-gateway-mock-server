@@ -5,6 +5,7 @@ import { PaymentIntentModule } from './payment-intent/payment-intent.module';
 import { HookModule } from './hook/hook.module';
 import { ChargeModule } from './charge/charge.module';
 import { CoreModule } from './core/core.module';
+import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { CoreModule } from './core/core.module';
     PaymentIntentModule,
     HookModule,
     ChargeModule,
+    TransactionModule,
   ],
   controllers: [],
   providers: [],
