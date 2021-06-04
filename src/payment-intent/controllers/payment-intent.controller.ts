@@ -20,8 +20,9 @@ export class PaymentIntentController {
   @Post('/')
   public async createUrl(@Body() body: any) {
     const data: any = {
-      currency: body.currency || faker.random.arrayElement(['USD', 'MXN']),
-      amount: body.amount || faker.finance.amount(),
+      externalId: body?.externalId,
+      currency: body?.currency || faker.random.arrayElement(['USD', 'MXN']),
+      amount: body?.amount || faker.finance.amount(),
       concept: faker.finance.transactionType(),
       payer: {
         name: body?.payer?.name || faker.company.companyName(),
@@ -33,12 +34,12 @@ export class PaymentIntentController {
         email: body?.payee?.email || faker.internet.email(),
         reference: body?.payee?.reference || faker.finance.account(8),
       },
-      metadata: body.metadata || {},
-      successUrl: body.successUrl || faker.internet.url(),
-      errorUrl: body.errorUrl || faker.internet.url(),
+      metadata: body?.metadata || {},
+      successUrl: body?.successUrl || faker.internet.url(),
+      errorUrl: body?.errorUrl || faker.internet.url(),
       webhook: {
         url: body?.webhook?.url || faker.internet.url(),
-        token: body?.webhook?.token || faker.datatype.string(32),
+        token: body?.webhook?.token,
       },
     };
 
