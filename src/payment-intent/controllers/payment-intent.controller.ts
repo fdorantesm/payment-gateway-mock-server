@@ -1,4 +1,3 @@
-import { base64decode, base64encode } from 'utility';
 import * as faker from 'faker';
 import {
   Body,
@@ -7,7 +6,7 @@ import {
   InternalServerErrorException,
   Param,
   Post,
-  Query,
+  Headers,
 } from '@nestjs/common';
 import { PaymentIntentService } from '../services/payment-intent.service';
 
@@ -18,9 +17,10 @@ export class PaymentIntentController {
   constructor(private readonly paymentIntentService: PaymentIntentService) {}
 
   @Post('/')
-  public async createUrl(@Body() body: any) {
+  public async createUrl(@Body() body: any, @Headers() headers: any) {
     const data: any = {
       externalId: body?.externalId,
+      platformId: headers?.Authorization || faker.datatype.uuid(),
       currency: body?.currency || faker.random.arrayElement(['USD', 'MXN']),
       amount: body?.amount || faker.finance.amount(),
       concept: faker.finance.transactionType(),
@@ -29,18 +29,15 @@ export class PaymentIntentController {
         email: body?.payer?.email || faker.internet.email(),
       },
       payee: {
-        name: body?.payee?.name || faker.company.companyName(),
-        clabe: body?.payee?.bankAccount || faker.finance.account(18),
+        alias: body?.payee?.alias || faker.company.companyName(),
+        bankAccountNumber:
+          body?.payee?.bankAccountNumber || faker.finance.account(18),
         email: body?.payee?.email || faker.internet.email(),
         reference: body?.payee?.reference || faker.finance.account(8),
       },
       metadata: body?.metadata || {},
       successUrl: body?.successUrl || faker.internet.url(),
       errorUrl: body?.errorUrl || faker.internet.url(),
-      webhook: {
-        url: body?.webhook?.url || faker.internet.url(),
-        token: body?.webhook?.token,
-      },
     };
 
     const paymentItent = await this.paymentIntentService.create(data);

@@ -25,9 +25,9 @@ export class PaymentIntentEntity extends Document {
 
   @Prop({ type: Object, required: true })
   public payee: {
-    name: string;
+    alias: string;
     email: string;
-    clabe: string;
+    bankAccountNumber: string;
     reference: string;
   };
 
@@ -42,12 +42,6 @@ export class PaymentIntentEntity extends Document {
   @Prop({ type: String, required: true })
   public errorUrl: string;
 
-  @Prop({ type: Object, required: true })
-  public webhook: {
-    url: string;
-    token: string;
-  };
-
   @Prop({ type: String, required: true })
   public status: PaymentIntentStatus;
 
@@ -61,6 +55,9 @@ export class PaymentIntentEntity extends Document {
 
   @Prop({ type: String })
   public externalId?: string;
+
+  @Prop({ type: String })
+  public platformId?: string;
 
   @Prop({ type: String, required: true })
   public createdBy: PaymentIntentCreator;
