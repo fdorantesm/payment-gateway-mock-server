@@ -5,6 +5,7 @@ export const configLoader = (): ConfigLoader => ({
   server: {
     tz: process.env.TZ || 'UTC',
     port: parseInt(process.env.APP_PORT, 10),
+    pmiSerial: process.env.PMI_SERIAL,
   },
   mongodb: {
     host: process.env.MONGODB_HOST,

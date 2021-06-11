@@ -10,4 +10,5 @@ export const configSchema = Joi.object({
   MONGODB_USER: Joi.string(),
   MONGODB_PASSWORD: Joi.string().allow('', null),
   MONGODB_DATABASE: Joi.string().required(),
+  PMI_SERIAL: Joi.string().default(''),
 });
